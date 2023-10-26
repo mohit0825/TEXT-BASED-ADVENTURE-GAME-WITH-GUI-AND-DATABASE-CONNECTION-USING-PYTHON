@@ -1,0 +1,80 @@
+-- COPY PASTE THIS ON MYSQL
+create database game_database;
+use game_database;
+
+-- Characters Table
+CREATE TABLE Characters (
+    character_id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL
+);
+
+-- Insert five characters
+INSERT INTO Characters (character_id ,name) VALUES
+(1, 'WARRIOR'),
+(2, 'MAGE'),
+(3, 'RANGER'),
+(4, 'TANKER'),
+(5, 'PRIEST');
+
+-- Monsters Table
+CREATE TABLE Monsters (
+    monster_id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    health INTEGER,
+    description TEXT
+);
+
+-- Insert five monsters
+INSERT INTO Monsters (monster_id, name, health, description) VALUES
+(21, 'Goblin', 30, 'A small, green creature'),
+(22, 'Orc', 50, 'A strong and aggressive humanoid'),
+(23, 'Dragon', 100, 'A mythical, fire-breathing creature'),
+(24, 'Skeleton', 40, 'An animated undead'),
+(25, 'Troll', 60, 'A large, menacing creature with regenerative abilities');
+
+-- InventoryItems Table
+CREATE TABLE InventoryItems (
+    item_id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    type TEXT,
+    owner_id INTEGER,
+    monster_id INTEGER,
+    FOREIGN KEY (owner_id) REFERENCES Characters (character_id),
+    FOREIGN KEY (monster_id) REFERENCES Monsters (monster_id)
+);
+
+-- Insert five inventory items with types and monster_id
+INSERT INTO InventoryItems (item_id, name, type, owner_id, monster_id) VALUES
+(11, 'Sword', 'Weapon', 1, 23),
+(12, 'Daggers', 'Weapon', 1, 21),
+(13, 'Magic Book', 'Range Weapon', 2, 25),
+(14, 'Spells', 'All Tier Weapon', 2, 23),
+(15, 'Bow', 'Long Weapon', 3, 22),
+(16, 'Guns', 'Range Weapon', 3, 21),
+(17, 'Long Sword', 'Weapon', 4, 22),
+(18, 'Shield', 'Shield', 4, 25),
+(19, 'Ward','Range Weapon', 5, 24),
+(20, 'Staves', 'Range Weapon', 5, 24);
+
+
+-- Create HealthItems table
+CREATE TABLE IF NOT EXISTS HealthItems (
+    item_id INTEGER PRIMARY KEY,
+    name TEXT,
+    healing_power INTEGER,
+    owner_id INTEGER,
+    FOREIGN KEY (owner_id) REFERENCES Characters(character_id)
+);
+
+-- Insert 10 health items associated with characters
+INSERT INTO HealthItems (item_id, name, healing_power, owner_id) VALUES
+(31, 'Health Potion', 20, 1),
+(32, 'Herbal Elixir', 15, 2),
+(33, 'Bandage', 10, 3),
+(34, 'Healing Salve', 18, 4),
+(35, 'Revitalizing Tonic', 25, 5),
+(36, 'Warm Tea', 12, 1),
+(37, 'Mystic Balm', 22, 2),
+(38, 'Vitality Elixir', 30, 3),
+(39, 'Sunrise Dew', 17, 4),
+(40, 'Moonlight Essence', 28, 5);
